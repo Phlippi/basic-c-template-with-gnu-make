@@ -9,10 +9,10 @@ OUTFILE=$(BUILDDIR)/out
 SRCS=$(wildcard $(SRCDIR)/*.cpp)
 OBJS=$(patsubst $(SRCDIR)/%.cpp, $(BUILDDIR)/%.o, $(SRCS))
 
-all: $(BUILDDIR) $(OBJS)
+all: $(OBJS) $(INCLUDEOBJDIR)
 	$(CC) $(CFLAGS) $(OBJS) $(INCLUDEOBJS) -o $(OUTFILE)
 
-$(BUILDDIR)/%.o: $(SRCDIR)/%.cpp
+$(BUILDDIR)/%.o: $(SRCDIR)/%.cpp $(HEADERINCLUDE) $(BUILDDIR)
 	$(CC) $(CFLAGS) -I$(HEADERINCLUDE) -c $< -o $@
 
 run: all
@@ -23,6 +23,14 @@ run: all
 clean:
 	rm -rf $(BUILDDIR)
 
+# tasks for creating folders
+
 $(BUILDDIR):
-	mkdir -p $(BUILDDIR)
+	mkdir -p $@
+
+$(HEADERINCLUDE):
+	mkdir -p $@
+
+$(INCLUDEOBJDIR):
+	mkdir -p $@
 
