@@ -1,3 +1,3 @@
-#include "demo.hpp"
+#include <iostream>
 
-std::string Greeting(std::string name) { return "Hello " + name + "!"; }
+int main() { std::cout << "Hello World!" << std::endl; }
