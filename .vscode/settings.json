@@ -1,0 +1,6 @@
+{
+    "makefile.configureOnOpen": true,
+    "editor.rulers": [
+        100
+    ],
+}
