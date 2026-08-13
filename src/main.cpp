@@ -1,6 +1,7 @@
 #include <iostream>
+#include <string>
 
-#include "other.hpp"
+#include "demo.hpp"
 
 int main() {
     while (true) {
