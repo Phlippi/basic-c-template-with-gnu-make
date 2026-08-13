@@ -4,18 +4,23 @@ BUILDDIR=build
 SRCDIR=src
 HEADERINCLUDE=include/header
 INCLUDEOBJDIR=include/object
-INCLUDEOBJS=$(wildcard $(INCLUDEOBJDIR)/*.o)
 OUTFILE=$(BUILDDIR)/out
+DEPSDIR=$(BUILDDIR)/deps
+INCLUDEOBJS=$(wildcard $(INCLUDEOBJDIR)/*.o)
 SRCS=$(wildcard $(SRCDIR)/*.cpp)
+DEPS=$(wildcard $(BUILDDIR)/*.d)
 OBJS=$(patsubst $(SRCDIR)/%.cpp, $(BUILDDIR)/%.o, $(SRCS))
 
-all: $(OBJS) $(INCLUDEOBJDIR)
+$(OUTFILE): $(OBJS) $(INCLUDEOBJDIR)
 	$(CC) $(CFLAGS) $(OBJS) $(INCLUDEOBJS) -o $(OUTFILE)
 
-$(BUILDDIR)/%.o: $(SRCDIR)/%.cpp $(HEADERINCLUDE) $(BUILDDIR)
-	$(CC) $(CFLAGS) -I$(HEADERINCLUDE) -c $< -o $@
+-include $(DEPS)
 
-run: all
+$(BUILDDIR)/%.o: $(SRCDIR)/%.cpp | $(BUILDDIR) $(HEADERINCLUDE)
+	$(CC) $(CFLAGS) -MMD -I$(HEADERINCLUDE) -c $< -o $@
+
+
+run: $(OUTFILE)
 	@echo
 	@echo "running program..."
 	./$(OUTFILE)
@@ -23,14 +28,6 @@ run: all
 clean:
 	rm -rf $(BUILDDIR)
 
-# tasks for creating folders
-
-$(BUILDDIR):
+# task for creating folders
+$(BUILDDIR) $(HEADERINCLUDE) $(INCLUDEOBJDIR) $(DEPSDIR):
 	mkdir -p $@
-
-$(HEADERINCLUDE):
-	mkdir -p $@
-
-$(INCLUDEOBJDIR):
-	mkdir -p $@
-
