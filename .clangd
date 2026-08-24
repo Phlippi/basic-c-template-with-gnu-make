@@ -1,3 +1,4 @@
 CompileFlags:
   Add:
     - "-I../include/header"
+    - "-std=c++20"
