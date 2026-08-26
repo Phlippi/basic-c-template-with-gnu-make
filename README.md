@@ -5,6 +5,7 @@ This is a basic and small template for c++. It is inted to be customized.
 - Include folders
 - Deps so that only necessary parts are compiled
 - clangd and clang-format support
+- diffrent build modes (release and debug)
 - very customizable
 
 ## Notes on clangd
