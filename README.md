@@ -31,4 +31,4 @@ CompileFlags:
 and you try to open file.cpp clangd will look for a include folder in src.
 To solve this I added a relative path with .. in the clangd file.
 
-The only problem is that you can't have nested directories. (I don't see that as much of a problem
+The only problem is that you can't have nested directories. (I don't see that as much of a problem with that for simple problems)
